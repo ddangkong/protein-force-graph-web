@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Protein Force Graph — Web</title>
+  <style>
+    :root { color-scheme: dark; }
+    html, body { margin: 0; height: 100%; background: #0b0e16; overflow: hidden;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; color: #dfe6f2; }
+    #app { position: fixed; inset: 0; }
+    .panel { position: fixed; background: rgba(10,12,18,0.92); border: 1px solid #2a3350;
+      border-radius: 8px; padding: 12px 14px; font-size: 13px; line-height: 1.5; backdrop-filter: blur(3px); }
+    #title { top: 14px; left: 14px; max-width: 340px; }
+    #title h1 { margin: 0 0 4px; font-size: 16px; color: #fff; }
+    #title .sub { color: #8ea0c0; font-size: 12px; }
+    #title .hint { color: #d9b53a; font-size: 12px; margin-top: 6px; }
+    #energy { top: 14px; right: 14px; min-width: 230px; }
+    #energy .row { display: flex; justify-content: space-between; }
+    #energy .k { color: #8ea0c0; } #energy .v { font-variant-numeric: tabular-nums; }
+    #energy .net { font-size: 15px; font-weight: 600; margin-top: 4px; }
+    #ctrl { bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; align-items: center;
+      flex-wrap: wrap; justify-content: center; max-width: 92vw; }
+    button.accent { background: #1d3a5c; border-color: #2f6bff; }
+    button.accent:hover { background: #244a73; }
+    button { background: #1b2236; color: #dfe6f2; border: 1px solid #37405a; border-radius: 6px;
+      padding: 7px 12px; font-size: 13px; cursor: pointer; }
+    button:hover { background: #243049; } button:disabled { opacity: .5; cursor: default; }
+    #status { font-size: 12px; color: #8ea0c0; }
+    .legend { position: fixed; bottom: 14px; right: 14px; font-size: 11px; color: #8ea0c0; }
+    .legend b { color: #dfe6f2; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <div id="title" class="panel">
+    <h1>Protein Force Graph <span style="font-size:12px;color:#6cf">· web</span></h1>
+    <div class="sub">1HSG — HIV‑1 protease + indinavir. Every number is a physics rule (LJ + Coulomb), not ML.
+      Load any protein PDB + ligand (or drag &amp; drop a file).</div>
+    <div class="hint">Drag the <b style="color:#4ee06a">green ligand</b> · orbit = drag empty space · scroll = zoom</div>
+  </div>
+
+  <div id="energy" class="panel">
+    <div class="row"><span class="k">van der Waals</span><span class="v" id="evdw">–</span></div>
+    <div class="row"><span class="k">electrostatic</span><span class="v" id="eelec">–</span></div>
+    <div class="row net"><span class="k">interaction E</span><span class="v" id="etot">–</span></div>
+    <div class="row" style="margin-top:4px"><span class="k">|net force|</span><span class="v" id="fnet">–</span></div>
+  </div>
+
+  <div id="ctrl" class="panel">
+    <button id="loadProt" class="accent">Load protein (PDB)</button>
+    <button id="loadLig" class="accent">Load ligand (SDF/MOL/PDB)</button>
+    <button id="reset">Reset pose</button>
+    <button id="forces">Force heatmap: ON</button>
+    <button id="minimize" disabled>Minimize (OpenMM)</button>
+    <span id="status">worker: checking…</span>
+  </div>
+
+  <div class="legend">force on residues: <b style="color:#2f6bff">low</b> → <b style="color:#56ec73">mid</b> → <b style="color:#ff3b30">high</b></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
