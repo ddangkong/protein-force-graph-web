@@ -8,7 +8,8 @@ import { checkHealth, minimize, poseToPdb } from './openmm.js';
 
 const CUTOFF = 9.0;          // Å — live nonbonded interaction range
 const PROT_SCALE = 0.42;     // sphere radius = scale * vdW
-const LIG_SCALE = 0.55;
+const LIG_SCALE = 0.68;      // ligand drawn chunkier than the protein so it reads as the focus
+const HALO_SCALE = 1.7;      // additive glow shell around each ligand atom
 const FMAX = 18.0;           // kcal/mol/Å — heatmap saturation
 
 const app = document.getElementById('app');
@@ -29,7 +30,11 @@ const key = new THREE.DirectionalLight(0xffffff, 0.85); key.position.set(1, 1, 1
 
 const sphereGeo = new THREE.SphereGeometry(1, 16, 12);
 const protMat = new THREE.MeshStandardMaterial({ roughness: 0.55 });
-const ligMat = new THREE.MeshStandardMaterial({ roughness: 0.4 });
+const ligMat = new THREE.MeshStandardMaterial({ roughness: 0.3, emissive: 0x0c1a12, emissiveIntensity: 1 });
+// Soft white-green additive shell — makes the ligand glow above the heatmap palette so it never
+// blends into the (also green/cyan) force-colored residues.
+const haloMat = new THREE.MeshBasicMaterial({ color: 0xc8ffdd, transparent: true, opacity: 0.33,
+  side: THREE.BackSide, depthWrite: false, blending: THREE.AdditiveBlending });
 
 let P = null, L = null, grid = null;
 const ligOffset = new THREE.Vector3();
@@ -65,11 +70,11 @@ function setStructure(protAtoms, ligAtoms, refit) {
   for (const a of protAtoms) { a.x -= cx; a.y -= cy; a.z -= cz; }
   for (const a of ligAtoms) { a.x -= cx; a.y -= cy; a.z -= cz; }
   if (P && P.mesh) { scene.remove(P.mesh); P.mesh.dispose(); }
-  if (L && L.mesh) { scene.remove(L.mesh); L.mesh.dispose(); }
+  if (L && L.mesh) { scene.remove(L.mesh); L.mesh.dispose(); if (L.halo) { scene.remove(L.halo); L.halo.dispose(); } }
   ligOffset.set(0, 0, 0);
   buildProtein(protAtoms);
   if (ligAtoms.length) buildLigand(ligAtoms);
-  else L = { n: 0, atoms: [], lbase: new Float32Array(0), mesh: null };
+  else L = { n: 0, atoms: [], lbase: new Float32Array(0), mesh: null, halo: null };
   buildGrid();
   if (refit) fitCamera();
   requestRender();
@@ -145,16 +150,21 @@ function buildLigand(arr) {
   const n = arr.length;
   const lbase = new Float32Array(3 * n), rmin = new Float32Array(n), eps = new Float32Array(n), q = new Float32Array(n), rad = new Float32Array(n);
   const mesh = new THREE.InstancedMesh(sphereGeo, ligMat, n);
+  const halo = new THREE.InstancedMesh(sphereGeo, haloMat, n);
+  halo.renderOrder = 2;                                  // draw the glow after the opaque atoms
   for (let i = 0; i < n; i++) {
     const a = arr[i];
     lbase[3 * i] = a.x; lbase[3 * i + 1] = a.y; lbase[3 * i + 2] = a.z;
     const lp = lj(a.el); rmin[i] = lp[0]; eps[i] = lp[1]; q[i] = charge(a.el); rad[i] = elem(a.el).vdw * LIG_SCALE;
-    dummy.position.set(a.x, a.y, a.z); dummy.scale.setScalar(rad[i]); dummy.updateMatrix(); mesh.setMatrixAt(i, dummy.matrix);
-    mesh.setColorAt(i, tmpC.set(a.el === 'C' ? 0x35e06a : elem(a.el).color));
+    dummy.position.set(a.x, a.y, a.z);
+    dummy.scale.setScalar(rad[i]); dummy.updateMatrix(); mesh.setMatrixAt(i, dummy.matrix);
+    dummy.scale.setScalar(rad[i] * HALO_SCALE); dummy.updateMatrix(); halo.setMatrixAt(i, dummy.matrix);
+    mesh.setColorAt(i, tmpC.set(a.el === 'C' ? 0x49ff84 : elem(a.el).color));
   }
   mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor.needsUpdate = true;
-  scene.add(mesh);
-  L = { n, lbase, rmin, eps, q, rad, mesh, atoms: arr,
+  halo.instanceMatrix.needsUpdate = true;
+  scene.add(mesh); scene.add(halo);
+  L = { n, lbase, rmin, eps, q, rad, mesh, halo, atoms: arr,
         resName: arr[0] ? arr[0].resName : 'MK1', resSeq: arr[0] ? arr[0].resSeq : 1, chain: arr[0] ? arr[0].chain : 'B' };
 }
 
@@ -216,8 +226,10 @@ function updateLigand() {
   for (let i = 0; i < L.n; i++) {
     dummy.position.set(L.lbase[3 * i] + ligOffset.x, L.lbase[3 * i + 1] + ligOffset.y, L.lbase[3 * i + 2] + ligOffset.z);
     dummy.scale.setScalar(L.rad[i]); dummy.updateMatrix(); L.mesh.setMatrixAt(i, dummy.matrix);
+    dummy.scale.setScalar(L.rad[i] * HALO_SCALE); dummy.updateMatrix(); L.halo.setMatrixAt(i, dummy.matrix);
   }
   L.mesh.instanceMatrix.needsUpdate = true;
+  L.halo.instanceMatrix.needsUpdate = true;
   L.mesh.computeBoundingSphere();
 }
 
