@@ -80,6 +80,15 @@ No build step is needed to develop. To make a static build: `npm run build` (out
 Waters are dropped on load; the ligand is detected as any non-standard `HETATM` residue (not an amino
 acid, water, or ion).
 
+### Deep-link a structure
+
+Open a specific structure straight from the URL. `?pdb=<file>` loads a protein from `public/` (its
+embedded `HETATM` ligand comes along); an optional `?lig=<file>` drops in a separate ligand. Falls
+back to the bundled 1HSG demo.
+
+- [`?pdb=1HSG.pdb`](?pdb=1HSG.pdb) — HIV-1 protease + indinavir *(default)*
+- [`?pdb=1M17.pdb`](?pdb=1M17.pdb) — EGFR kinase + erlotinib
+
 ### A 30-second tour
 
 1. The app opens on **1HSG**. The crystal pose reads roughly **vdW ≈ −49 kcal/mol** — net attractive,
@@ -127,7 +136,7 @@ src/pdb.js         PDB parser (protein / ligand split)
 src/sdf.js         minimal V2000 SDF / MOL parser
 src/chemistry.js   element table (radii, colors)
 src/openmm.js      optional OpenMM worker client
-public/            demo structures (1HSG protease + MK1 ligand)
+public/            demo structures (1HSG protease+indinavir, 1M17 EGFR kinase+erlotinib)
 assets/            README screenshots
 ```
 

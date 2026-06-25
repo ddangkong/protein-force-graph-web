@@ -58,9 +58,17 @@ async function init() {
   };
   pollHealth();
   addEventListener('resize', onResize);
-  const text = await (await fetch('1HSG.pdb')).text();
-  const d = parsePdb(text);
+  // Optional deep-link: ?pdb=<file>[&lig=<file>] — defaults to the bundled 1HSG demo.
+  const params = new URLSearchParams(location.search);
+  const want = params.get('pdb') || '1HSG.pdb';
+  let d = parsePdb(await (await fetch(want)).text());
+  if (!d.protein.length) { status('could not load ' + want + ' — showing 1HSG'); d = parsePdb(await (await fetch('1HSG.pdb')).text()); }
   setStructure(d.protein, d.ligand, true);
+  const ligUrl = params.get('lig');
+  if (ligUrl) {
+    try { loadLigandText(await (await fetch(ligUrl)).text(), extOf(ligUrl)); }
+    catch { status('ligand load failed: ' + ligUrl); }
+  }
 }
 
 // Rebuild the whole scene from a protein + ligand atom set (centered on the protein centroid).
