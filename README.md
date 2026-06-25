@@ -72,7 +72,8 @@ No build step is needed to develop. To make a static build: `npm run build` (out
   magnitude of the total force on the ligand.
 - **Atom colors (heatmap on).** Each protein atom is colored by the magnitude of the force it feels
   from the ligand: **blue** (low) → cyan → green → yellow → **red** (high, i.e. a steric clash).
-  With the heatmap off, atoms use standard CPK element colors. The ligand is drawn in green.
+  With the heatmap off, atoms use standard CPK element colors. The ligand is drawn larger and in green
+  with a soft glow, so it never blends into the (also green/cyan) force-colored residues.
 - **Net-force arrow.** Points in the direction of the total force on the ligand; **cyan** when the
   interaction is net-attractive, **red** when net-repulsive. Longer = stronger.
 
@@ -103,11 +104,12 @@ mouth first, then click **Find binding site** and the settle pulls it into the w
 ### Deep-link a structure
 
 Open a specific structure straight from the URL. `?pdb=<file>` loads a protein from `public/` (its
-embedded `HETATM` ligand comes along); an optional `?lig=<file>` drops in a separate ligand. Falls
-back to the bundled 1HSG demo.
+embedded `HETATM` ligand comes along); an optional `?lig=<file>` drops in a separate ligand, or
+`?smiles=<SMILES>` builds one in 3D on load. Falls back to the bundled 1HSG demo.
 
 - [`?pdb=1HSG.pdb`](?pdb=1HSG.pdb) — HIV-1 protease + indinavir *(default)*
 - [`?pdb=1M17.pdb`](?pdb=1M17.pdb) — EGFR kinase + erlotinib
+- `?pdb=1M17.pdb&smiles=CC(=O)Oc1ccccc1C(=O)O` — EGFR with an aspirin ligand built from SMILES
 
 ### A 30-second tour
 
