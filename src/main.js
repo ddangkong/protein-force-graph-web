@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { parsePdb } from './pdb.js';
 import { parseSdf } from './sdf.js';
 import { elem } from './chemistry.js';
-import { lj, charge, pair } from './forcefield.js';
+import { lj, charge, pair, K, MINR2 } from './forcefield.js';
 import { checkHealth, minimize, poseToPdb } from './openmm.js';
 
 const CUTOFF = 9.0;          // Å — live nonbonded interaction range
@@ -64,8 +64,9 @@ async function init() {
   let d = parsePdb(await (await fetch(want)).text());
   if (!d.protein.length) { status('could not load ' + want + ' — showing 1HSG'); d = parsePdb(await (await fetch('1HSG.pdb')).text()); }
   setStructure(d.protein, d.ligand, true);
-  const ligUrl = params.get('lig');
-  if (ligUrl) {
+  const smi = params.get('smiles'), ligUrl = params.get('lig');
+  if (smi) buildLigandFromSmiles(smi);
+  else if (ligUrl) {
     try { loadLigandText(await (await fetch(ligUrl)).text(), extOf(ligUrl)); }
     catch { status('ligand load failed: ' + ligUrl); }
   }
@@ -113,11 +114,58 @@ function loadLigandText(text, e) {
   status('ligand loaded · ' + lig.length + ' atoms — drag it into the pocket');
 }
 
-function status(t) { const s = document.getElementById('status'); if (s) s.textContent = t; }
+function status(t) { const s = document.getElementById('loadStatus'); if (s) s.textContent = t; }
+
+const RCSB = 'https://files.rcsb.org/download/';
+
+// Fetch a structure straight from the RCSB PDB bank by its 4-character ID (RCSB serves CORS).
+async function fetchPdbById(id) {
+  id = (id || '').trim().toUpperCase();
+  if (!/^[0-9A-Z]{4}$/.test(id)) { status('enter a 4-character PDB ID (e.g. 1M17)'); return; }
+  status('fetching ' + id + ' from RCSB…');
+  try {
+    const r = await fetch(RCSB + id + '.pdb');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    loadProteinText(await r.text());
+  } catch (e) { status('could not fetch ' + id + ' — ' + e.message); }
+}
+
+// SMILES → 3D ligand, fully in the browser via OpenChemLib — no server, works offline and on
+// NOVEL / synthesized compounds (it builds the 3D conformer + MMFF94-relaxes it from the structure).
+// The library + its MMFF94 resource tables (~3 MB) load lazily on first use, then stay cached.
+let _ocl = null;
+async function getOCL() {
+  if (_ocl) return _ocl;
+  status('loading the 3D builder (one-time)…');
+  const OCL = await import('openchemlib');
+  OCL.Resources.register(await (await fetch('ocl-resources.json')).text());
+  _ocl = OCL;
+  return OCL;
+}
+async function buildLigandFromSmiles(smiles) {
+  smiles = (smiles || '').trim();
+  if (!smiles) { status('paste a ligand SMILES first'); return; }
+  if (!P) { status('load a protein first'); return; }
+  try {
+    const OCL = await getOCL();
+    status('building 3D from SMILES…');
+    const mol = OCL.Molecule.fromSmiles(smiles);
+    const m3 = new OCL.ConformerGenerator(0x5eed).getOneConformerAsMolecule(mol);
+    if (!m3) throw new Error('could not generate a 3D conformer');
+    loadLigandText(m3.toMolfile(), 'mol');
+  } catch (e) {
+    status('SMILES → 3D failed — ' + String((e && e.message) || e).replace(/^[\w$]+:\s*/, ''));
+  }
+}
 
 function setupLoaders() {
   document.getElementById('loadProt').onclick = () => pickFile('.pdb', (t) => loadProteinText(t));
   document.getElementById('loadLig').onclick = () => pickFile('.sdf,.mol,.mol2,.pdb', (t, name) => loadLigandText(t, extOf(name)));
+  const pdbId = document.getElementById('pdbId'), smiles = document.getElementById('smiles');
+  document.getElementById('fetchPdb').onclick = () => fetchPdbById(pdbId.value);
+  document.getElementById('buildLig').onclick = () => buildLigandFromSmiles(smiles.value);
+  pdbId.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') fetchPdbById(pdbId.value); });
+  smiles.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') buildLigandFromSmiles(smiles.value); });
   document.addEventListener('dragover', (ev) => ev.preventDefault());
   document.addEventListener('drop', (ev) => {
     ev.preventDefault(); const f = ev.dataTransfer.files[0]; if (!f) return;
@@ -172,19 +220,20 @@ function buildLigand(arr) {
   mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor.needsUpdate = true;
   halo.instanceMatrix.needsUpdate = true;
   scene.add(mesh); scene.add(halo);
-  L = { n, lbase, rmin, eps, q, rad, mesh, halo, atoms: arr,
+  L = { n, lbase, lbase0: lbase.slice(), rmin, eps, q, rad, mesh, halo, atoms: arr,
         resName: arr[0] ? arr[0].resName : 'MK1', resSeq: arr[0] ? arr[0].resSeq : 1, chain: arr[0] ? arr[0].chain : 'B' };
 }
 
 function buildGrid() {
   const cs = CUTOFF, map = new Map();
   for (let i = 0; i < P.n; i++) {
-    const k = ck(P.pos[3 * i], P.pos[3 * i + 1], P.pos[3 * i + 2], cs);
+    const k = cellKey(Math.floor(P.pos[3 * i] / cs), Math.floor(P.pos[3 * i + 1] / cs), Math.floor(P.pos[3 * i + 2] / cs));
     let b = map.get(k); if (!b) { b = []; map.set(k, b); } b.push(i);
   }
   grid = { cs, map };
 }
-const ck = (x, y, z, cs) => Math.floor(x / cs) + ',' + Math.floor(y / cs) + ',' + Math.floor(z / cs);
+// integer cell key (base-512 pack; avoids per-lookup string allocation in the hot loops)
+const cellKey = (ix, iy, iz) => (ix + 256) * 262144 + (iy + 256) * 512 + (iz + 256);
 
 function computeForces() {
   P.fx.fill(0); P.fy.fill(0); P.fz.fill(0);
@@ -196,7 +245,7 @@ function computeForces() {
     const lr = L.rmin[i], le = L.eps[i], lq = L.q[i];
     const ix = Math.floor(lx / cs), iy = Math.floor(ly / cs), iz = Math.floor(lz / cs);
     for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) for (let c = -1; c <= 1; c++) {
-      const bucket = grid.map.get((ix + a) + ',' + (iy + b) + ',' + (iz + c));
+      const bucket = grid.map.get(cellKey(ix + a, iy + b, iz + c));
       if (!bucket) continue;
       for (const pj of bucket) {
         const px = P.pos[3 * pj], py = P.pos[3 * pj + 1], pz = P.pos[3 * pj + 2];
@@ -210,6 +259,176 @@ function computeForces() {
     }
   }
   return { nx, ny, nz, evdw, eelec, mag: Math.hypot(nx, ny, nz) };
+}
+
+// ---- Physics binding-site scan ------------------------------------------------------------
+// Rigidly steps the ligand over the protein (a grid of positions × a few orientations) and evaluates
+// the SAME LJ+Coulomb interaction energy shown live, then snaps it to the most favorable (lowest-E)
+// spot. A transparent scan of our own force field — NOT docking, NOT ML, and NOT a binding ΔG.
+// Energy-only (no force, no sqrt) — this runs millions of times during a scan, so it inlines the
+// LJ + RDIE-Coulomb energy from forcefield.js (kept in sync with pair()).
+function rigidEnergy(base, gx, gy, gz) {
+  const cs = grid.cs, c2 = CUTOFF * CUTOFF, pos = P.pos, prm = P.rmin, pep = P.eps, pq = P.q, map = grid.map;
+  let e = 0;
+  for (let i = 0; i < L.n; i++) {
+    const lx = base[3 * i] + gx, ly = base[3 * i + 1] + gy, lz = base[3 * i + 2] + gz;
+    const lr = L.rmin[i], le = L.eps[i], lq = L.q[i];
+    const ix = Math.floor(lx / cs), iy = Math.floor(ly / cs), iz = Math.floor(lz / cs);
+    for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) for (let c = -1; c <= 1; c++) {
+      const bucket = map.get(cellKey(ix + a, iy + b, iz + c));
+      if (!bucket) continue;
+      for (let k = 0; k < bucket.length; k++) {
+        const pj = bucket[k];
+        const dx = lx - pos[3 * pj], dy = ly - pos[3 * pj + 1], dz = lz - pos[3 * pj + 2];
+        let r2 = dx * dx + dy * dy + dz * dz;
+        if (r2 > c2) continue;
+        if (r2 < MINR2) r2 = MINR2;
+        const ir2 = 1 / r2, rmin = lr + prm[pj];
+        const sr2 = rmin * rmin * ir2, sr6 = sr2 * sr2 * sr2;
+        e += Math.sqrt(le * pep[pj]) * (sr6 * sr6 - 2 * sr6) + K * lq * pq[pj] * 0.25 * ir2;
+        if (e > 1000) return e;                  // steric clash — abandon this pose early
+      }
+    }
+  }
+  return e;
+}
+
+// energy + net force on the ligand for a rigid pose (drives the local settle)
+function rigidForce(base, gx, gy, gz, f) {
+  const cs = grid.cs, c2 = CUTOFF * CUTOFF, pos = P.pos, prm = P.rmin, pep = P.eps, pq = P.q, map = grid.map;
+  let e = 0, fx = 0, fy = 0, fz = 0;
+  for (let i = 0; i < L.n; i++) {
+    const lx = base[3 * i] + gx, ly = base[3 * i + 1] + gy, lz = base[3 * i + 2] + gz;
+    const lr = L.rmin[i], le = L.eps[i], lq = L.q[i];
+    const ix = Math.floor(lx / cs), iy = Math.floor(ly / cs), iz = Math.floor(lz / cs);
+    for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) for (let c = -1; c <= 1; c++) {
+      const bucket = map.get(cellKey(ix + a, iy + b, iz + c));
+      if (!bucket) continue;
+      for (let k = 0; k < bucket.length; k++) {
+        const pj = bucket[k];
+        const dx = lx - pos[3 * pj], dy = ly - pos[3 * pj + 1], dz = lz - pos[3 * pj + 2];
+        if (dx * dx + dy * dy + dz * dz > c2) continue;
+        pair(lx, ly, lz, lr, le, lq, pos[3 * pj], pos[3 * pj + 1], pos[3 * pj + 2], prm[pj], pep[pj], pq[pj], out);
+        fx += out.fx; fy += out.fy; fz += out.fz; e += out.e;
+      }
+    }
+  }
+  f.x = fx; f.y = fy; f.z = fz; return e;
+}
+// translational gradient descent on the net force; returns the settled centroid + energy (pure — no global state)
+function settlePose(base, gx, gy, gz) {
+  const f = { x: 0, y: 0, z: 0 };
+  let e = rigidForce(base, gx, gy, gz, f);
+  for (let s = 0; s < 50; s++) {
+    const m = Math.hypot(f.x, f.y, f.z);
+    if (m < 3) break;
+    const d = 0.25 / m;
+    gx += f.x * d; gy += f.y * d; gz += f.z * d;
+    e = rigidForce(base, gx, gy, gz, f);
+  }
+  return { gx, gy, gz, e };
+}
+
+const ROT = (() => {                             // 12 orientations covering rough SO(3)
+  const m = [], P2 = Math.PI;
+  for (const ay of [0, P2 / 3, 2 * P2 / 3, P2, 4 * P2 / 3, 5 * P2 / 3])
+    for (const ax of [0, P2 / 2]) {
+      const cy = Math.cos(ay), sy = Math.sin(ay), cx = Math.cos(ax), sx = Math.sin(ax);
+      m.push([cy, 0, sy, sx * sy, cx, -sx * cy, -cx * sy, sx, cx * cy]);
+    }
+  return m;
+})();
+
+async function findSite() {
+  if (!L || !L.n) { status('load a ligand first'); return; }
+  status('scanning for the most favorable site…');
+  await new Promise(r => setTimeout(r, 0));      // let the status paint (rAF is unreliable headless)
+
+  // ligand atoms relative to their own centroid, pre-rotated into each sampled orientation
+  let cx = 0, cy = 0, cz = 0;
+  for (let i = 0; i < L.n; i++) { cx += L.lbase[3 * i]; cy += L.lbase[3 * i + 1]; cz += L.lbase[3 * i + 2]; }
+  cx /= L.n; cy /= L.n; cz /= L.n;
+  const local = new Float32Array(3 * L.n);
+  for (let i = 0; i < L.n; i++) { local[3 * i] = L.lbase[3 * i] - cx; local[3 * i + 1] = L.lbase[3 * i + 1] - cy; local[3 * i + 2] = L.lbase[3 * i + 2] - cz; }
+  const rotated = ROT.map(m => {
+    const rb = new Float32Array(3 * L.n);
+    for (let i = 0; i < L.n; i++) {
+      const x = local[3 * i], y = local[3 * i + 1], z = local[3 * i + 2];
+      rb[3 * i] = m[0] * x + m[1] * y + m[2] * z;
+      rb[3 * i + 1] = m[3] * x + m[4] * y + m[5] * z;
+      rb[3 * i + 2] = m[6] * x + m[7] * y + m[8] * z;
+    }
+    return rb;
+  });
+
+  // protein bounding box (+ margin); step adapts to size so the pose count stays bounded
+  let mnx = 1e9, mny = 1e9, mnz = 1e9, mxx = -1e9, mxy = -1e9, mxz = -1e9;
+  for (let i = 0; i < P.n; i++) {
+    const x = P.pos[3 * i], y = P.pos[3 * i + 1], z = P.pos[3 * i + 2];
+    if (x < mnx) mnx = x; if (y < mny) mny = y; if (z < mnz) mnz = z;
+    if (x > mxx) mxx = x; if (y > mxy) mxy = y; if (z > mxz) mxz = z;
+  }
+  const M = 3; mnx -= M; mny -= M; mnz -= M; mxx += M; mxy += M; mxz += M;
+  const span = Math.max(mxx - mnx, mxy - mny, mxz - mnz);
+  const step = Math.max(3.2, span / 13);           // coarse positions; the per-candidate settle refines them
+  const t0 = performance.now(), BUDGET = 2200;     // wall-clock cap
+
+  // pass 1 — coarse scan; collect a few spatially-separated favorable positions, the single global-min
+  // position, AND the current pose (so the result is never worse than where the ligand already sits).
+  const cgx = cx + ligOffset.x, cgy = cy + ligOffset.y, cgz = cz + ligOffset.z;
+  const SEP2 = 25, K = 6;
+  const cands = [];
+  const consider = (e, gx, gy, gz) => {
+    for (let i = 0; i < cands.length; i++) {
+      const c = cands[i], dx = c.gx - gx, dy = c.gy - gy, dz = c.gz - gz;
+      if (dx * dx + dy * dy + dz * dz < SEP2) { if (e < c.e) { c.e = e; c.gx = gx; c.gy = gy; c.gz = gz; } return; }
+    }
+    cands.push({ e, gx, gy, gz });
+    cands.sort((p, q) => p.e - q.e);
+    if (cands.length > K) cands.length = K;
+  };
+  const coarseOri = Math.min(6, rotated.length);
+  let gbe = Infinity, gbx = cgx, gby = cgy, gbz = cgz, stop = false;
+  for (let ri = 0; ri < coarseOri && !stop; ri++) {
+    const rb = rotated[ri];
+    for (let gx = mnx; gx <= mxx && !stop; gx += step) {
+      for (let gy = mny; gy <= mxy; gy += step)
+        for (let gz = mnz; gz <= mxz; gz += step) {
+          const e = rigidEnergy(rb, gx, gy, gz);
+          if (e < gbe) { gbe = e; gbx = gx; gby = gy; gbz = gz; }
+          if (e < -0.5) consider(e, gx, gy, gz);
+        }
+      if (performance.now() - t0 > BUDGET) stop = true;
+    }
+    status('scanning… ' + Math.round(80 * (ri + 1) / coarseOri) + '%');
+    await new Promise(r => setTimeout(r, 0));
+  }
+  if (isFinite(gbe)) consider(gbe, gbx, gby, gbz);
+  cands.push({ e: rigidEnergy(rotated[0], cgx, cgy, cgz), gx: cgx, gy: cgy, gz: cgz });
+
+  // pass 2 — for each candidate: pick the best orientation there, then settle into the local well;
+  // keep the deepest settled pose
+  let best = null;
+  for (let ci = 0; ci < cands.length; ci++) {
+    const cnd = cands[ci];
+    let ori = 0, oe = Infinity;
+    for (let ri = 0; ri < rotated.length; ri++) {
+      const e = rigidEnergy(rotated[ri], cnd.gx, cnd.gy, cnd.gz);
+      if (e < oe) { oe = e; ori = ri; }
+    }
+    const s = settlePose(rotated[ori], cnd.gx, cnd.gy, cnd.gz);
+    if (!best || s.e < best.e) best = { e: s.e, gx: s.gx, gy: s.gy, gz: s.gz, ori };
+    status('settling… ' + Math.round(80 + 20 * (ci + 1) / cands.length) + '%');
+    await new Promise(r => setTimeout(r, 0));
+  }
+
+  if (!best || !isFinite(best.e) || best.e >= 0) { status('no clearly favorable site found — try another conformation'); return; }
+  // bake the winning orientation about the ligand's home centroid, snap to the settled centroid
+  const rb = rotated[best.ori];
+  for (let i = 0; i < L.n; i++) { L.lbase[3 * i] = rb[3 * i] + cx; L.lbase[3 * i + 1] = rb[3 * i + 1] + cy; L.lbase[3 * i + 2] = rb[3 * i + 2] + cz; }
+  ligOffset.set(best.gx - cx, best.gy - cy, best.gz - cz);
+  requestRender();
+  status('best site · interaction E ' + best.e.toFixed(1) + ' kcal/mol (rigid scan + settle — drag to fine-tune)');
 }
 
 function updateProteinColors() {
@@ -318,7 +537,11 @@ function onResize() {
 }
 
 function setupUI() {
-  document.getElementById('reset').onclick = () => { ligOffset.set(0, 0, 0); requestRender(); };
+  document.getElementById('reset').onclick = () => {
+    if (L && L.lbase0) L.lbase.set(L.lbase0);      // also undo a scan's baked rotation
+    ligOffset.set(0, 0, 0); requestRender();
+  };
+  document.getElementById('findSite').onclick = findSite;
   const fb = document.getElementById('forces');
   fb.onclick = () => { heatmap = !heatmap; fb.textContent = 'Force heatmap: ' + (heatmap ? 'ON' : 'OFF'); requestRender(); };
   document.getElementById('minimize').onclick = onMinimize;

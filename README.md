@@ -29,6 +29,14 @@ The default scene is **1HSG**: HIV-1 protease bound to the inhibitor indinavir (
 - **Load any structure.** Load an arbitrary protein **PDB**, and a ligand from **SDF / MOL / PDB**,
   via the buttons or by drag-and-drop. A loaded ligand is a full participant in the force field —
   identical physics to the built-in one.
+- **Fetch from the PDB bank.** Type a 4-character PDB ID (e.g. `1M17`) and pull the structure
+  straight from RCSB — no download step.
+- **Build a ligand from SMILES.** Paste a SMILES string and a 3D conformer is generated **in the
+  browser** ([OpenChemLib](https://github.com/cheminfo/openchemlib-js)) — works offline and on
+  novel / synthesized compounds (no server, no local toolchain).
+- **Find binding site.** Scans the same LJ + Coulomb energy across the protein (rigid positions ×
+  orientations) and settles the ligand into the most favorable spot it can reach — never moving it
+  somewhere worse than where it started. A transparent physics scan, **not** docking or ML.
 
 | The whole protein, pocket glowing | Push the ligand into the wall → clash |
 | :---: | :---: |
@@ -70,15 +78,27 @@ No build step is needed to develop. To make a static build: `npm run build` (out
 
 ### Load your own protein and ligand
 
-- **Load protein (PDB)** — pick a `.pdb` file. It replaces the scene and is re-centered automatically;
-  if the file contains a HETATM ligand, that ligand is loaded too.
-- **Load ligand (SDF / MOL / PDB)** — pick a ligand file. It appears just *outside* the protein so
-  you can **drag it into the pocket** and watch the forces respond.
-- **Drag & drop** — drop a file anywhere on the window: `.pdb` is treated as a protein,
-  `.sdf` / `.mol` / `.mol2` as a ligand.
+The top-left panel is everything you can load:
 
-Waters are dropped on load; the ligand is detected as any non-standard `HETATM` residue (not an amino
-acid, water, or ion).
+- **PDB ID → Fetch** — type a 4-character ID (e.g. `1M17`) to pull it from RCSB.
+- **SMILES → Build** — paste a ligand SMILES; a 3D conformer is generated in the browser and dropped
+  in just outside the protein, ready to drag into the pocket. Works on novel/synthesized compounds.
+- **protein file / ligand file** — pick a local `.pdb`, or a ligand `.sdf` / `.mol` / `.pdb`.
+- **Drag & drop** — drop a file anywhere: `.pdb` → protein, `.sdf` / `.mol` / `.mol2` → ligand.
+
+A loaded protein is re-centered automatically; if a PDB has a HETATM ligand it comes along. Waters are
+dropped on load; the ligand is any non-standard `HETATM` residue (not an amino acid, water, or ion).
+
+### Find the binding site
+
+**Find binding site** scans the same LJ + Coulomb interaction energy over the protein (rigid positions
+× orientations) and settles the ligand into the most favorable spot it can reach — and **never** moves
+it somewhere worse than where it already is. It's a transparent scan of our own force field, **not**
+docking or ML, and the result is not a ΔG.
+
+It excels at accessible pockets (e.g. it finds trypsin's S1 site, salt-bridge and all). For a **deep,
+buried pocket** a rigid scan can't always thread the ligand in from far away — drag it near the pocket
+mouth first, then click **Find binding site** and the settle pulls it into the well.
 
 ### Deep-link a structure
 
@@ -130,16 +150,17 @@ worker and is **not** needed for the in-browser physics.
 
 ```
 index.html         overlay UI (energy panel, controls, legend)
-src/main.js        scene, force loop, ligand drag, heatmap, file loaders
+src/main.js        scene, force loop, drag, heatmap, loaders, RCSB/SMILES, binding-site scan
 src/forcefield.js  Lennard-Jones + Coulomb
 src/pdb.js         PDB parser (protein / ligand split)
 src/sdf.js         minimal V2000 SDF / MOL parser
 src/chemistry.js   element table (radii, colors)
 src/openmm.js      optional OpenMM worker client
-public/            demo structures (1HSG protease+indinavir, 1M17 EGFR kinase+erlotinib)
+public/            demo structures + ocl-resources.json (OpenChemLib MMFF tables, lazy-loaded)
 assets/            README screenshots
 ```
 
 ## Tech
 
-Vite · Three.js · plain ES modules.
+Vite · Three.js · [OpenChemLib](https://github.com/cheminfo/openchemlib-js) (lazy, SMILES→3D) ·
+plain ES modules.

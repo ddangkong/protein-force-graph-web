@@ -10,23 +10,44 @@
       font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; color: #dfe6f2; }
     #app { position: fixed; inset: 0; }
     .panel { position: fixed; background: rgba(10,12,18,0.92); border: 1px solid #2a3350;
-      border-radius: 8px; padding: 12px 14px; font-size: 13px; line-height: 1.5; backdrop-filter: blur(3px); }
-    #title { top: 14px; left: 14px; max-width: 340px; }
-    #title h1 { margin: 0 0 4px; font-size: 16px; color: #fff; }
-    #title .sub { color: #8ea0c0; font-size: 12px; }
-    #title .hint { color: #d9b53a; font-size: 12px; margin-top: 6px; }
-    #energy { top: 14px; right: 14px; min-width: 230px; }
+      border-radius: 9px; padding: 12px 14px; font-size: 13px; line-height: 1.5; backdrop-filter: blur(4px); }
+
+    /* top-left: identity + everything you can LOAD */
+    #title { top: 14px; left: 14px; width: 286px; }
+    #title h1 { margin: 0 0 3px; font-size: 16px; color: #fff; }
+    #title .tag { font-size: 11px; color: #6cf; vertical-align: 2px; }
+    #title .sub { color: #8ea0c0; font-size: 11.5px; }
+    .load { margin: 11px 0 9px; display: flex; flex-direction: column; gap: 7px; }
+    .load .row { display: flex; gap: 6px; }
+    .load input { flex: 1; min-width: 0; background: #10141e; border: 1px solid #2a3350; color: #eef3fb;
+      border-radius: 6px; padding: 7px 9px; font-size: 12px; font-family: inherit; }
+    .load input::placeholder { color: #59698a; }
+    .load input:focus { outline: none; border-color: #2f6bff; background: #121826; }
+    .load .row button { min-width: 56px; }
+    .load .files { font-size: 11px; color: #7286a4; }
+    .load .files a { color: #6cf; cursor: pointer; }
+    .load .files a:hover { text-decoration: underline; }
+    #loadStatus { font-size: 11px; color: #d9b53a; min-height: 14px; }
+    .hint { color: #7286a4; font-size: 11px; }
+    .hint b { color: #4ee06a; }
+
+    /* top-right: what you READ */
+    #energy { top: 14px; right: 14px; min-width: 232px; }
     #energy .row { display: flex; justify-content: space-between; }
     #energy .k { color: #8ea0c0; } #energy .v { font-variant-numeric: tabular-nums; }
     #energy .net { font-size: 15px; font-weight: 600; margin-top: 4px; }
+    #energy .foot { color: #59698a; font-size: 10.5px; margin-top: 7px; line-height: 1.35; }
+
+    /* bottom-center: what you DO */
     #ctrl { bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; align-items: center;
       flex-wrap: wrap; justify-content: center; max-width: 92vw; }
-    button.accent { background: #1d3a5c; border-color: #2f6bff; }
-    button.accent:hover { background: #244a73; }
     button { background: #1b2236; color: #dfe6f2; border: 1px solid #37405a; border-radius: 6px;
       padding: 7px 12px; font-size: 13px; cursor: pointer; }
     button:hover { background: #243049; } button:disabled { opacity: .5; cursor: default; }
+    button.accent { background: #1d3a5c; border-color: #2f6bff; }
+    button.accent:hover { background: #244a73; }
     #status { font-size: 12px; color: #8ea0c0; }
+
     .legend { position: fixed; bottom: 14px; right: 14px; font-size: 11px; color: #8ea0c0; }
     .legend b { color: #dfe6f2; }
   </style>
@@ -35,10 +56,23 @@
   <div id="app"></div>
 
   <div id="title" class="panel">
-    <h1>Protein Force Graph <span style="font-size:12px;color:#6cf">· web</span></h1>
-    <div class="sub">1HSG — HIV‑1 protease + indinavir. Every number is a physics rule (LJ + Coulomb), not ML.
-      Load any protein PDB + ligand (or drag &amp; drop a file).</div>
-    <div class="hint">Drag the <b style="color:#4ee06a">green ligand</b> · orbit = drag empty space · scroll = zoom</div>
+    <h1>Protein Force Graph <span class="tag">web</span></h1>
+    <div class="sub">Physics-only protein–ligand forces — every number is LJ + Coulomb, not ML.</div>
+
+    <div class="load">
+      <div class="row">
+        <input id="pdbId" placeholder="PDB ID — e.g. 1M17" autocomplete="off" spellcheck="false" />
+        <button id="fetchPdb" class="accent">Fetch</button>
+      </div>
+      <div class="row">
+        <input id="smiles" placeholder="Ligand SMILES — build 3D" autocomplete="off" spellcheck="false" />
+        <button id="buildLig" class="accent">Build</button>
+      </div>
+      <div class="files">or <a id="loadProt">protein file</a> · <a id="loadLig">ligand file</a> · drag &amp; drop</div>
+      <div id="loadStatus"></div>
+    </div>
+
+    <div class="hint">drag the <b>green ligand</b> · orbit = drag space · scroll = zoom</div>
   </div>
 
   <div id="energy" class="panel">
@@ -46,11 +80,11 @@
     <div class="row"><span class="k">electrostatic</span><span class="v" id="eelec">–</span></div>
     <div class="row net"><span class="k">interaction E</span><span class="v" id="etot">–</span></div>
     <div class="row" style="margin-top:4px"><span class="k">|net force|</span><span class="v" id="fnet">–</span></div>
+    <div class="foot">Nonbonded interaction energy (force-field estimate) — not a binding ΔG.</div>
   </div>
 
   <div id="ctrl" class="panel">
-    <button id="loadProt" class="accent">Load protein (PDB)</button>
-    <button id="loadLig" class="accent">Load ligand (SDF/MOL/PDB)</button>
+    <button id="findSite" class="accent" title="Scan our LJ+Coulomb energy across the protein and snap the ligand to the most favorable spot (rigid physics scan — not docking, not a binding ΔG)">Find binding site</button>
     <button id="reset">Reset pose</button>
     <button id="forces">Force heatmap: ON</button>
     <button id="minimize" disabled>Minimize (OpenMM)</button>

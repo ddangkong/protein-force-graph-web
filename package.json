@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "openchemlib": "^9.23.0",
     "three": "^0.169.0"
   },
   "devDependencies": {

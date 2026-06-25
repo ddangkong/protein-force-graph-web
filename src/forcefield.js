@@ -9,8 +9,8 @@ const LJ = {  // [rmin/2 (Å), epsilon (kcal/mol)]  — Amber/GAFF-ish
 };
 const Q = { O: -0.40, N: -0.32, C: 0.10, H: 0.10, S: -0.20, P: 0.45, F: -0.22, Cl: -0.13, Br: -0.10 };
 
-const K = 332.0636;     // Coulomb constant (kcal·Å/(mol·e²))
-const MINR2 = 0.36;     // clamp r >= 0.6 Å to avoid the singularity
+export const K = 332.0636;     // Coulomb constant (kcal·Å/(mol·e²))
+export const MINR2 = 0.36;     // clamp r >= 0.6 Å to avoid the singularity
 
 export function lj(sym) { return LJ[sym] || LJ.C; }
 export function charge(sym) { return Q[sym] ?? 0.0; }
