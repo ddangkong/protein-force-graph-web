@@ -6,7 +6,7 @@ Drag a ligand around a protein and watch the **force on every residue update in 
 each atom colored blue→red by how hard the ligand pushes or pulls it. Every number on screen is a
 transparent physical rule (Lennard-Jones + Coulomb), **not** a machine-learning prediction.
 
-![Indinavir in the HIV-1 protease pocket; nearby residues are tinted by the force they feel from the ligand](assets/hero.png)
+![As the ligand moves in the HIV-1 protease pocket, every residue is tinted live by the Lennard-Jones + Coulomb force it feels from it](assets/demo.gif)
 
 > This is an **explainer / intuition** tool — *not* a docking or binding-affinity predictor.
 > See [Honest scope](#honest-scope).
