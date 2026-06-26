@@ -86,7 +86,16 @@ def run(cmd, cwd=None):
 def prep_protein():
     out = f"{WORK}/protein_amber.pdb"
     if not os.path.exists(out):
-        run(["pdb4amber", "-i", PROT_SRC, "-o", out, "--nohyd", "--dry"])
+        tmp = f"{WORK}/_p4a.pdb"
+        run(["pdb4amber", "-i", PROT_SRC, "-o", tmp, "--nohyd", "--dry"])
+        # strip structural metal ions (ff14SB has no type for bare Zn/Mg/etc.; they sit outside the
+        # ligand pocket in these benchmark receptors). Keeps standard residues + ACE/NME caps.
+        IONS = {"ZN", "MG", "MN", "CA", "NA", "K", "CL", "FE", "CU", "CD", "CO", "NI", "HG"}
+        with open(tmp) as fi, open(out, "w") as fo:
+            for ln in fi:
+                if ln[:6] in ("ATOM  ", "HETATM") and ln[17:20].strip() in IONS:
+                    continue
+                fo.write(ln)
     return out
 
 def run_ligand(name, mol, prot_pdb):
@@ -98,6 +107,7 @@ def run_ligand(name, mol, prot_pdb):
          "-c", "bcc", "-nc", str(nc), "-s", "0", "-pf", "y", "-at", "gaff2"], cwd=d)
     run(["parmchk2", "-i", f"{d}/lig.mol2", "-f", "mol2", "-o", f"{d}/lig.frcmod", "-s", "gaff2"])
     leap = f"""source leaprc.protein.ff14SB
+source leaprc.phosaa14SB
 source leaprc.gaff2
 set default PBRadii mbondi3
 lig = loadmol2 {d}/lig.mol2

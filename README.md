@@ -153,13 +153,14 @@ worker and is **not** needed for the in-browser physics.
 ## Validation — is any of this physics predictive?
 
 The in-app score is for intuition, not prediction — but the **same physics done rigorously** does
-track real data. Across **four [OpenFF benchmark](validation/) targets / 98 ligands** (a protease, a
-protein–protein interface, a phosphatase, and a kinase), single-trajectory **MM-GBSA**
-(real ff14SB + GAFF2/AM1-BCC + GBn2 implicit solvent) ranks binding at **mean Spearman ρ ≈ 0.57** —
-beating the app's coarse score (mean ρ ≈ 0.31) on **every** target. Still physics-only, no ML. Full
-methods, per-target data, and reproducible scripts: [`validation/`](validation/).
+track real data. Across **eight [OpenFF benchmark](validation/) targets / 184 ligands** (protease, PPI,
+phosphatase, three kinases, glycohydrolase, transcription factor), single-trajectory **MM-GBSA** (real
+ff14SB + GAFF2/AM1-BCC + GBn2 implicit solvent) ranks binding well on **6 of 8** (Spearman ρ = 0.41–0.70,
+**median ≈ 0.51**) — far better than the app's coarse score (median ρ ≈ 0.18). It honestly **fails on 2**
+(narrow-range cdk2, hydrophobic-allosteric hif2a) — the known target-dependence of MM-GBSA. Still
+physics-only, no ML. Methods, per-target data, and reproducible scripts: [`validation/`](validation/).
 
-![MM-GBSA vs experimental binding affinity across four targets](validation/mmgbsa_targets.png)
+![MM-GBSA vs experimental binding affinity across eight targets](validation/mmgbsa_targets.png)
 
 ## Project layout
 
