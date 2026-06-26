@@ -150,6 +150,17 @@ An optional [OpenMM](https://openmm.org/) worker ([`src/openmm.js`](src/openmm.j
 dragged pose with a real ff14SB + GAFF force field, but it requires running a separate Python
 worker and is **not** needed for the in-browser physics.
 
+## Validation — is any of this physics predictive?
+
+The in-app score is for intuition, not prediction — but the **same physics done rigorously** does
+track real data. On the [OpenFF thrombin benchmark](validation/) (22 ligands with measured
+affinities), single-trajectory **MM-GBSA** (real ff14SB + GAFF2/AM1-BCC + GBn2 implicit solvent)
+ranks binding at **Pearson r = 0.55 / Spearman ρ = 0.41** (p ≈ 0.008), while the app's coarse score
+is essentially uncorrelated (r = 0.20) — still physics-only, no ML. Full methods, data, and scripts:
+[`validation/`](validation/).
+
+![Physics-only scores vs experimental binding affinity (thrombin, n=22)](validation/thrombin_mmgbsa.png)
+
 ## Project layout
 
 ```
