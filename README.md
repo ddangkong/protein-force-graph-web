@@ -153,13 +153,13 @@ worker and is **not** needed for the in-browser physics.
 ## Validation — is any of this physics predictive?
 
 The in-app score is for intuition, not prediction — but the **same physics done rigorously** does
-track real data. On the [OpenFF thrombin benchmark](validation/) (22 ligands with measured
-affinities), single-trajectory **MM-GBSA** (real ff14SB + GAFF2/AM1-BCC + GBn2 implicit solvent)
-ranks binding at **Pearson r = 0.55 / Spearman ρ = 0.41** (p ≈ 0.008), while the app's coarse score
-is essentially uncorrelated (r = 0.20) — still physics-only, no ML. Full methods, data, and scripts:
-[`validation/`](validation/).
+track real data. Across **four [OpenFF benchmark](validation/) targets / 98 ligands** (a protease, a
+protein–protein interface, a phosphatase, and a kinase), single-trajectory **MM-GBSA**
+(real ff14SB + GAFF2/AM1-BCC + GBn2 implicit solvent) ranks binding at **mean Spearman ρ ≈ 0.57** —
+beating the app's coarse score (mean ρ ≈ 0.31) on **every** target. Still physics-only, no ML. Full
+methods, per-target data, and reproducible scripts: [`validation/`](validation/).
 
-![Physics-only scores vs experimental binding affinity (thrombin, n=22)](validation/thrombin_mmgbsa.png)
+![MM-GBSA vs experimental binding affinity across four targets](validation/mmgbsa_targets.png)
 
 ## Project layout
 

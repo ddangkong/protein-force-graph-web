@@ -139,17 +139,26 @@ def main():
     mols = [m for m in sup if m is not None]
     if LIMIT: mols = mols[:LIMIT]
     out = f"{WORK}/results.csv"
-    with open(out, "w") as fo:
-        fo.write("name,dG_exp,dG_mmgbsa,dE_vac,crude\n")
-        for i, mol in enumerate(mols, 1):
-            name = mol.GetProp("_Name")
-            try:
-                dGe = exp_dG(ydat, name)
-                g, v, c = run_ligand(name, mol, prot_pdb)
-                fo.write(f"{name},{dGe:.3f},{g:.3f},{v:.3f},{c:.3f}\n"); fo.flush()
-                print(f"[{i}/{len(mols)}] {name:10s} exp {dGe:6.2f}  MMGBSA {g:8.2f}  vac {v:9.1f}  crude {c:9.1f}", flush=True)
-            except Exception as e:
-                print(f"[{i}/{len(mols)}] {name:10s} FAILED: {str(e)[:200]}", flush=True)
+    done = set()
+    if os.path.exists(out):
+        for ln in open(out):
+            if ln.strip() and not ln.startswith("name,"):
+                done.add(ln.split(",")[0])
+    fo = open(out, "a" if done else "w")
+    if not done:
+        fo.write("name,dG_exp,dG_mmgbsa,dE_vac,crude\n"); fo.flush()
+    for i, mol in enumerate(mols, 1):
+        name = mol.GetProp("_Name")
+        if name in done:
+            print(f"[{i}/{len(mols)}] {name:10s} (cached)", flush=True); continue
+        try:
+            dGe = exp_dG(ydat, name)
+            g, v, c = run_ligand(name, mol, prot_pdb)
+            fo.write(f"{name},{dGe:.3f},{g:.3f},{v:.3f},{c:.3f}\n"); fo.flush()
+            print(f"[{i}/{len(mols)}] {name:10s} exp {dGe:6.2f}  MMGBSA {g:8.2f}  vac {v:9.1f}  crude {c:9.1f}", flush=True)
+        except Exception as e:
+            print(f"[{i}/{len(mols)}] {name:10s} FAILED: {str(e)[:200]}", flush=True)
+    fo.close()
     print("wrote", out)
 
 if __name__ == "__main__":
