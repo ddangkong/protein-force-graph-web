@@ -56,6 +56,30 @@ real force field with solvent — is a **real, if imperfect, affinity ranker**: 
 weak on hard ones, and transparent about which is which. Receipts (plots, per-target data, scripts)
 are all here.
 
+## Improvement attempts — short MD averaging & entropy (didn't help)
+
+The scores above use one energy-minimized pose per complex. Two standard "cheap" upgrades were tested
+on four targets — and **neither reliably helped**:
+
+| target | n | single-snapshot ρ | MD-ensemble ρ (#1) | MD + interaction-entropy ρ (#2) |
+| --- | :---: | :---: | :---: | :---: |
+| ptp1b | 22 | 0.70 | 0.48 | 0.36 |
+| mcl1 | 25 | 0.62 | 0.64 | 0.67 |
+| p38 | 29 | 0.57 | 0.54 | 0.35 |
+| thrombin | 22 | 0.41 | 0.29 | 0.30 |
+| **median** | | **0.59** | 0.51 | 0.35 |
+
+- **#1 short MD-ensemble averaging** (Cα-restrained GBn2 MD, 12 frames): target-dependent — marginally up
+  on mcl1, flat on p38, **down** on thrombin and ptp1b; net slightly worse. Short MD adds thermal noise
+  that, for sub-kcal congeneric differences, washes out signal more than it averages single-point noise —
+  the minimized snapshot is a cleaner, *consistent* reference across ligands.
+- **#2 interaction entropy** (Duan 2016, from the same MD): **hurt** (median 0.59 → 0.35) — the known
+  instability of IE for flexible complexes.
+
+**Conclusion:** in this cheap regime the **energy-minimized single snapshot is the sweet spot**; reliable
+gains need the expensive route (long explicit-solvent MD ensembles, or FEP), out of scope here. A negative
+result, reported honestly. Scripts: [`mmgbsa_md.py`](mmgbsa_md.py), [`mmgbsa_compare.py`](mmgbsa_compare.py).
+
 ## Honest scope
 
 Single-**snapshot** MM-GBSA — **not** FEP accuracy, and the absolute numbers are **not** ΔG (note the
