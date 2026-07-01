@@ -184,13 +184,12 @@ function pickFile(accept, cb) {
 function buildProtein(arr) {
   const n = arr.length;
   const pos = new Float32Array(3 * n), rmin = new Float32Array(n), eps = new Float32Array(n), q = new Float32Array(n);
-  const base = new Float32Array(3 * n), resKey = new Array(n);
+  const base = new Float32Array(3 * n);
   const mesh = new THREE.InstancedMesh(sphereGeo, protMat, n);
   for (let i = 0; i < n; i++) {
     const a = arr[i];
     pos[3 * i] = a.x; pos[3 * i + 1] = a.y; pos[3 * i + 2] = a.z;
     const lp = lj(a.el); rmin[i] = lp[0]; eps[i] = lp[1]; q[i] = charge(a.el);
-    resKey[i] = a.chain + a.resSeq;
     dummy.position.set(a.x, a.y, a.z); dummy.scale.setScalar(elem(a.el).vdw * PROT_SCALE);
     dummy.updateMatrix(); mesh.setMatrixAt(i, dummy.matrix);
     tmpC.set(elem(a.el).color); base[3 * i] = tmpC.r; base[3 * i + 1] = tmpC.g; base[3 * i + 2] = tmpC.b;
@@ -198,7 +197,7 @@ function buildProtein(arr) {
   }
   mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor.needsUpdate = true;
   scene.add(mesh);
-  P = { n, pos, rmin, eps, q, base, mesh, resKey, atoms: arr,
+  P = { n, pos, rmin, eps, q, base, mesh, atoms: arr,
         fx: new Float32Array(n), fy: new Float32Array(n), fz: new Float32Array(n) };
 }
 
@@ -548,9 +547,14 @@ function setupUI() {
 }
 
 async function pollHealth() {
+  const s = document.getElementById('status'), btn = document.getElementById('minimize');
+  // the OpenMM worker is a local-only dev feature; hide it on a deployed site (an HTTPS page can't
+  // reach http://127.0.0.1 anyway — mixed content — so the button would just sit dead + confusing).
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    s.style.display = 'none'; btn.style.display = 'none'; return;
+  }
   const h = await checkHealth();
-  const s = document.getElementById('status');
-  if (h.ok) { s.textContent = 'worker: ' + (h.cuda ? 'ready (CUDA)' : 'ready'); document.getElementById('minimize').disabled = false; }
+  if (h.ok) { s.textContent = 'worker: ' + (h.cuda ? 'ready (CUDA)' : 'ready'); btn.disabled = false; }
   else s.textContent = 'worker: offline (start_worker.bat)';
 }
 
