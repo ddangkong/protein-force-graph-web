@@ -1,0 +1,596 @@
+03:23:23 phase1: 420 search jobs (0 already done)
+03:23:25   '짜파게티 레시피'/today: 18 hits
+03:23:29   '짜파게티 레시피'/week: 68 hits
+03:23:33   '짜파게티 레시피'/month: 61 hits
+03:23:40   '짜파게티 레시피'/year: 102 hits
+03:23:43   '짜파게티 레시피'/views: 40 hits
+03:23:48   '짜파게티 레시피'/relevance: 67 hits
+03:23:49   '짜파게티 꿀조합'/today: 10 hits
+03:23:53   '짜파게티 꿀조합'/week: 30 hits
+03:23:58   '짜파게티 꿀조합'/month: 35 hits
+03:24:03   '짜파게티 꿀조합'/year: 52 hits
+03:24:06   '짜파게티 꿀조합'/views: 40 hits
+03:24:10   '짜파게티 꿀조합'/relevance: 59 hits
+03:24:12   '짜파게티 맛있게 끓이는법'/today: 18 hits
+03:24:16   '짜파게티 맛있게 끓이는법'/week: 50 hits
+03:24:22   '짜파게티 맛있게 끓이는법'/month: 81 hits
+03:24:31   '짜파게티 맛있게 끓이는법'/year: 55 hits
+03:24:33   '짜파게티 맛있게 끓이는법'/views: 40 hits
+03:24:38   '짜파게티 맛있게 끓이는법'/relevance: 70 hits
+03:24:39   '짜파게티 튜닝'/today: 0 hits
+03:24:42   '짜파게티 튜닝'/week: 16 hits
+03:24:45   '짜파게티 튜닝'/month: 19 hits
+03:24:50   '짜파게티 튜닝'/year: 13 hits
+03:24:52   '짜파게티 튜닝'/views: 1 hits
+03:24:56   '짜파게티 튜닝'/relevance: 63 hits
+03:24:58   '짜파게티 만들기'/today: 5 hits
+03:25:00   '짜파게티 만들기'/week: 23 hits
+03:25:03   '짜파게티 만들기'/month: 21 hits
+03:25:12   '짜파게티 만들기'/year: 68 hits
+03:25:15   '짜파게티 만들기'/views: 40 hits
+03:25:20   '짜파게티 만들기'/relevance: 66 hits
+03:25:21   '짜파게티 요리'/today: 6 hits
+03:25:26   '짜파게티 요리'/week: 38 hits
+03:25:31   '짜파게티 요리'/month: 64 hits
+03:25:40   '짜파게티 요리'/year: 77 hits
+03:25:42   '짜파게티 요리'/views: 31 hits
+03:25:47   '짜파게티 요리'/relevance: 77 hits
+03:25:49   '짜파게티 응용'/today: 5 hits
+03:25:53   '짜파게티 응용'/week: 19 hits
+03:25:56   '짜파게티 응용'/month: 24 hits
+03:25:59   '짜파게티 응용'/year: 29 hits
+03:26:01   '짜파게티 응용'/views: 4 hits
+03:26:06   '짜파게티 응용'/relevance: 67 hits
+03:26:08   '짜파게티 조합'/today: 6 hits
+03:26:10   '짜파게티 조합'/week: 30 hits
+03:26:16   '짜파게티 조합'/month: 29 hits
+03:26:25   '짜파게티 조합'/year: 123 hits
+03:26:28   '짜파게티 조합'/views: 40 hits
+03:26:33   '짜파게티 조합'/relevance: 71 hits
+03:26:34   '짜파게티 먹방'/today: 28 hits
+03:26:39   '짜파게티 먹방'/week: 65 hits
+03:26:46   '짜파게티 먹방'/month: 100 hits
+03:26:55   '짜파게티 먹방'/year: 117 hits
+03:26:57   '짜파게티 먹방'/views: 40 hits
+03:27:02   '짜파게티 먹방'/relevance: 65 hits
+03:27:04   '짜파게티 #shorts'/today: 25 hits
+03:27:08   '짜파게티 #shorts'/week: 23 hits
+03:27:13   '짜파게티 #shorts'/month: 51 hits
+03:27:16   '짜파게티 #shorts'/year: 21 hits
+03:27:19   '짜파게티 #shorts'/views: 40 hits
+03:27:24   '짜파게티 #shorts'/relevance: 66 hits
+03:27:25   '짜파게티 쇼츠'/today: 25 hits
+03:27:29   '짜파게티 쇼츠'/week: 22 hits
+03:27:32   '짜파게티 쇼츠'/month: 38 hits
+03:27:40   '짜파게티 쇼츠'/year: 87 hits
+03:27:43   '짜파게티 쇼츠'/views: 30 hits
+03:27:48   '짜파게티 쇼츠'/relevance: 60 hits
+03:27:49   '짜파게티 볶음밥'/today: 5 hits
+03:27:53   '짜파게티 볶음밥'/week: 29 hits
+03:27:55   '짜파게티 볶음밥'/month: 24 hits
+03:28:00   '짜파게티 볶음밥'/year: 66 hits
+03:28:02   '짜파게티 볶음밥'/views: 40 hits
+03:28:07   '짜파게티 볶음밥'/relevance: 68 hits
+03:28:09   '짜파게티 치즈'/today: 19 hits
+03:28:13   '짜파게티 치즈'/week: 62 hits
+03:28:20   '짜파게티 치즈'/month: 101 hits
+03:28:29   '짜파게티 치즈'/year: 136 hits
+03:28:32   '짜파게티 치즈'/views: 40 hits
+03:28:36   '짜파게티 치즈'/relevance: 68 hits
+03:28:38   '짜파게티 계란'/today: 7 hits
+03:28:42   '짜파게티 계란'/week: 46 hits
+03:28:49   '짜파게티 계란'/month: 73 hits
+03:28:58   '짜파게티 계란'/year: 115 hits
+03:29:00   '짜파게티 계란'/views: 40 hits
+03:29:05   '짜파게티 계란'/relevance: 59 hits
+03:29:07   '짜계치'/today: 2 hits
+03:29:09   '짜계치'/week: 7 hits
+03:29:12   '짜계치'/month: 40 hits
+03:29:20   '짜계치'/year: 67 hits
+03:29:23   '짜계치'/views: 40 hits
+03:29:28   '짜계치'/relevance: 73 hits
+03:29:30   '짜파구리'/today: 4 hits
+03:29:32   '짜파구리'/week: 13 hits
+03:29:36   '짜파구리'/month: 41 hits
+03:29:45   '짜파구리'/year: 84 hits
+03:29:48   '짜파구리'/views: 40 hits
+03:29:52   '짜파구리'/relevance: 83 hits
+03:29:54   '사천 짜파게티'/today: 6 hits
+03:29:56   '사천 짜파게티'/week: 16 hits
+03:30:00   '사천 짜파게티'/month: 25 hits
+03:30:08   '사천 짜파게티'/year: 80 hits
+03:30:11   '사천 짜파게티'/views: 40 hits
+03:30:16   '사천 짜파게티'/relevance: 88 hits
+03:30:17   '윤남노 짜파게티'/today: 4 hits
+03:30:19   '윤남노 짜파게티'/week: 5 hits
+03:30:21   '윤남노 짜파게티'/month: 11 hits
+03:30:29   '윤남노 짜파게티'/year: 84 hits
+03:30:32   '윤남노 짜파게티'/views: 40 hits
+03:30:37   '윤남노 짜파게티'/relevance: 71 hits
+03:30:39   '정지선 짜파게티'/today: 4 hits
+03:30:40   '정지선 짜파게티'/week: 5 hits
+03:30:42   '정지선 짜파게티'/month: 5 hits
+03:30:46   '정지선 짜파게티'/year: 19 hits
+03:30:47   '정지선 짜파게티'/views: 7 hits
+03:30:52   '정지선 짜파게티'/relevance: 68 hits
+03:30:54   '짜파게티 불닭'/today: 10 hits
+03:30:57   '짜파게티 불닭'/week: 39 hits
+03:31:04   '짜파게티 불닭'/month: 81 hits
+03:31:13   '짜파게티 불닭'/year: 82 hits
+03:31:16   '짜파게티 불닭'/views: 34 hits
+03:31:21   '짜파게티 불닭'/relevance: 70 hits
+03:31:22   '짜파게티 너구리'/today: 8 hits
+03:31:25   '짜파게티 너구리'/week: 25 hits
+03:31:27   '짜파게티 너구리'/month: 30 hits
+03:31:35   '짜파게티 너구리'/year: 101 hits
+03:31:38   '짜파게티 너구리'/views: 40 hits
+03:31:43   '짜파게티 너구리'/relevance: 75 hits
+03:31:44   '짜파게티 열라면'/today: 1 hits
+03:31:46   '짜파게티 열라면'/week: 12 hits
+03:31:50   '짜파게티 열라면'/month: 26 hits
+03:31:58   '짜파게티 열라면'/year: 56 hits
+03:32:01   '짜파게티 열라면'/views: 40 hits
+03:32:05   '짜파게티 열라면'/relevance: 65 hits
+03:32:07   '짜파게티 파기름'/today: 5 hits
+03:32:09   '짜파게티 파기름'/week: 14 hits
+03:32:11   '짜파게티 파기름'/month: 12 hits
+03:32:14   '짜파게티 파기름'/year: 41 hits
+03:32:17   '짜파게티 파기름'/views: 40 hits
+03:32:22   '짜파게티 파기름'/relevance: 68 hits
+03:32:24   '짜파게티 굴소스'/today: 5 hits
+03:32:27   '짜파게티 굴소스'/week: 14 hits
+03:32:30   '짜파게티 굴소스'/month: 26 hits
+03:32:38   '짜파게티 굴소스'/year: 36 hits
+03:32:40   '짜파게티 굴소스'/views: 40 hits
+03:32:45   '짜파게티 굴소스'/relevance: 68 hits
+03:32:47   '짜파게티 트러플'/today: 5 hits
+03:32:49   '짜파게티 트러플'/week: 17 hits
+03:32:52   '짜파게티 트러플'/month: 21 hits
+03:33:00   '짜파게티 트러플'/year: 59 hits
+03:33:03   '짜파게티 트러플'/views: 40 hits
+03:33:08   '짜파게티 트러플'/relevance: 78 hits
+03:33:09   '짜파게티 새우'/today: 5 hits
+03:33:11   '짜파게티 새우'/week: 25 hits
+03:33:17   '짜파게티 새우'/month: 65 hits
+03:33:26   '짜파게티 새우'/year: 79 hits
+03:33:28   '짜파게티 새우'/views: 40 hits
+03:33:33   '짜파게티 새우'/relevance: 67 hits
+03:33:35   '짜파게티 삼겹살'/today: 6 hits
+03:33:38   '짜파게티 삼겹살'/week: 33 hits
+03:33:44   '짜파게티 삼겹살'/month: 61 hits
+03:33:53   '짜파게티 삼겹살'/year: 125 hits
+03:33:56   '짜파게티 삼겹살'/views: 40 hits
+03:34:00   '짜파게티 삼겹살'/relevance: 77 hits
+03:34:02   '짜파게티 김치'/today: 5 hits
+03:34:06   '짜파게티 김치'/week: 44 hits
+03:34:13   '짜파게티 김치'/month: 75 hits
+03:34:22   '짜파게티 김치'/year: 109 hits
+03:34:25   '짜파게티 김치'/views: 40 hits
+03:34:30   '짜파게티 김치'/relevance: 84 hits
+03:34:31   '짜파게티 파김치'/today: 5 hits
+03:34:35   '짜파게티 파김치'/week: 34 hits
+03:34:39   '짜파게티 파김치'/month: 39 hits
+03:34:48   '짜파게티 파김치'/year: 104 hits
+03:34:51   '짜파게티 파김치'/views: 40 hits
+03:35:12 phase1: 420 search jobs (173 already done)
+03:35:17   '짜파게티 파김치'/relevance: 89 hits
+03:35:19   '짜파게티 전자레인지'/today: 5 hits
+03:35:23   '짜파게티 전자레인지'/week: 16 hits
+03:35:25   '짜파게티 전자레인지'/month: 19 hits
+03:35:30   '짜파게티 전자레인지'/year: 74 hits
+03:35:33   '짜파게티 전자레인지'/views: 40 hits
+03:35:37   '짜파게티 전자레인지'/relevance: 73 hits
+03:35:39   '짜파게티 큰사발'/today: 4 hits
+03:35:41   '짜파게티 큰사발'/week: 7 hits
+03:35:43   '짜파게티 큰사발'/month: 13 hits
+03:35:51   '짜파게티 큰사발'/year: 98 hits
+03:35:54   '짜파게티 큰사발'/views: 40 hits
+03:35:59   '짜파게티 큰사발'/relevance: 74 hits
+03:36:00   '짜파게티 컵라면'/today: 6 hits
+03:36:04   '짜파게티 컵라면'/week: 30 hits
+03:36:11   '짜파게티 컵라면'/month: 62 hits
+03:36:20   '짜파게티 컵라면'/year: 103 hits
+03:36:23   '짜파게티 컵라면'/views: 40 hits
+03:36:28   '짜파게티 컵라면'/relevance: 68 hits
+03:36:29   '짜파게티 범벅'/today: 6 hits
+03:36:32   '짜파게티 범벅'/week: 18 hits
+03:36:37   '짜파게티 범벅'/month: 31 hits
+03:36:45   '짜파게티 범벅'/year: 123 hits
+03:36:48   '짜파게티 범벅'/views: 40 hits
+03:36:53   '짜파게티 범벅'/relevance: 94 hits
+03:36:53   '짜파게티 더블랙'/today: 0 hits
+03:36:55   '짜파게티 더블랙'/week: 19 hits
+03:36:58   '짜파게티 더블랙'/month: 30 hits
+03:37:07   '짜파게티 더블랙'/year: 106 hits
+03:37:09   '짜파게티 더블랙'/views: 40 hits
+03:37:14   '짜파게티 더블랙'/relevance: 84 hits
+03:37:15   '짜파게티 요리대회'/today: 0 hits
+03:37:17   '짜파게티 요리대회'/week: 7 hits
+03:37:20   '짜파게티 요리대회'/month: 16 hits
+03:37:25   '짜파게티 요리대회'/year: 58 hits
+03:37:27   '짜파게티 요리대회'/views: 14 hits
+03:37:31   '짜파게티 요리대회'/relevance: 65 hits
+03:37:33   '짜파게티 요리사'/today: 5 hits
+03:37:37   '짜파게티 요리사'/week: 22 hits
+03:37:43   '짜파게티 요리사'/month: 44 hits
+03:37:52   '짜파게티 요리사'/year: 62 hits
+03:37:55   '짜파게티 요리사'/views: 40 hits
+03:37:59   '짜파게티 요리사'/relevance: 82 hits
+03:38:01   '짜파게티 챌린지'/today: 9 hits
+03:38:05   '짜파게티 챌린지'/week: 44 hits
+03:38:13   '짜파게티 챌린지'/month: 82 hits
+03:38:21   '짜파게티 챌린지'/year: 100 hits
+03:38:23   '짜파게티 챌린지'/views: 40 hits
+03:38:28   '짜파게티 챌린지'/relevance: 72 hits
+03:38:30   '짜파게티 자취요리'/today: 5 hits
+03:38:33   '짜파게티 자취요리'/week: 19 hits
+03:38:39   '짜파게티 자취요리'/month: 39 hits
+03:38:47   '짜파게티 자취요리'/year: 124 hits
+03:38:50   '짜파게티 자취요리'/views: 40 hits
+03:38:55   '짜파게티 자취요리'/relevance: 69 hits
+03:38:55   '짜파게티 다이어트'/today: 0 hits
+03:38:57   '짜파게티 다이어트'/week: 21 hits
+03:39:01   '짜파게티 다이어트'/month: 37 hits
+03:39:09   '짜파게티 다이어트'/year: 115 hits
+03:39:12   '짜파게티 다이어트'/views: 40 hits
+03:39:17   '짜파게티 다이어트'/relevance: 61 hits
+03:39:18   '짜파게티 에어프라이어'/today: 5 hits
+03:39:20   '짜파게티 에어프라이어'/week: 11 hits
+03:39:24   '짜파게티 에어프라이어'/month: 12 hits
+03:39:28   '짜파게티 에어프라이어'/year: 34 hits
+03:39:30   '짜파게티 에어프라이어'/views: 14 hits
+03:39:35   '짜파게티 에어프라이어'/relevance: 71 hits
+03:39:37   '짜파게티 떡볶이'/today: 9 hits
+03:39:40   '짜파게티 떡볶이'/week: 51 hits
+03:39:42   '짜파게티 떡볶이'/month: 39 hits
+03:39:50   '짜파게티 떡볶이'/year: 85 hits
+03:39:53   '짜파게티 떡볶이'/views: 40 hits
+03:39:58   '짜파게티 떡볶이'/relevance: 74 hits
+03:39:59   '짜파게티 만두'/today: 5 hits
+03:40:03   '짜파게티 만두'/week: 19 hits
+03:40:07   '짜파게티 만두'/month: 46 hits
+03:40:15   '짜파게티 만두'/year: 65 hits
+03:40:18   '짜파게티 만두'/views: 40 hits
+03:40:23   '짜파게티 만두'/relevance: 78 hits
+03:40:24   '짜파게티 스테이크'/today: 5 hits
+03:40:28   '짜파게티 스테이크'/week: 17 hits
+03:40:33   '짜파게티 스테이크'/month: 28 hits
+03:40:38   '짜파게티 스테이크'/year: 49 hits
+03:40:41   '짜파게티 스테이크'/views: 40 hits
+03:40:46   '짜파게티 스테이크'/relevance: 77 hits
+03:40:47   '짜파게티 마요네즈'/today: 4 hits
+03:40:49   '짜파게티 마요네즈'/week: 6 hits
+03:40:51   '짜파게티 마요네즈'/month: 9 hits
+03:40:56   '짜파게티 마요네즈'/year: 57 hits
+03:40:58   '짜파게티 마요네즈'/views: 19 hits
+03:41:02   '짜파게티 마요네즈'/relevance: 66 hits
+03:41:04   '짜파게티 참치'/today: 6 hits
+03:41:06   '짜파게티 참치'/week: 17 hits
+03:41:09   '짜파게티 참치'/month: 23 hits
+03:41:14   '짜파게티 참치'/year: 45 hits
+03:41:17   '짜파게티 참치'/views: 40 hits
+03:41:22   '짜파게티 참치'/relevance: 68 hits
+03:41:23   '짜파게티 순후추'/today: 5 hits
+03:41:25   '짜파게티 순후추'/week: 6 hits
+03:41:27   '짜파게티 순후추'/month: 6 hits
+03:41:29   '짜파게티 순후추'/year: 12 hits
+03:41:31   '짜파게티 순후추'/views: 1 hits
+03:41:36   '짜파게티 순후추'/relevance: 72 hits
+03:41:37   '짜파게티 카레'/today: 4 hits
+03:41:39   '짜파게티 카레'/week: 12 hits
+03:41:42   '짜파게티 카레'/month: 26 hits
+03:41:51   '짜파게티 카레'/year: 66 hits
+03:41:53   '짜파게티 카레'/views: 37 hits
+03:41:58   '짜파게티 카레'/relevance: 78 hits
+03:41:59   '짜파게티 물 안버리고'/today: 0 hits
+03:42:01   '짜파게티 물 안버리고'/week: 5 hits
+03:42:03   '짜파게티 물 안버리고'/month: 7 hits
+03:42:05   '짜파게티 물 안버리고'/year: 9 hits
+03:42:07   '짜파게티 물 안버리고'/views: 40 hits
+03:42:12   '짜파게티 물 안버리고'/relevance: 74 hits
+03:42:14   '짜파게티 면수'/today: 5 hits
+03:42:17   '짜파게티 면수'/week: 16 hits
+03:42:20   '짜파게티 면수'/month: 19 hits
+03:42:25   '짜파게티 면수'/year: 26 hits
+03:42:26   '짜파게티 면수'/views: 5 hits
+03:42:31   '짜파게티 면수'/relevance: 63 hits
+03:42:33   '짜파게티 국물'/today: 11 hits
+03:42:37   '짜파게티 국물'/week: 50 hits
+03:42:42   '짜파게티 국물'/month: 76 hits
+03:42:50   '짜파게티 국물'/year: 50 hits
+03:42:53   '짜파게티 국물'/views: 40 hits
+03:42:58   '짜파게티 국물'/relevance: 65 hits
+03:42:59   '짜파게티 밥'/today: 8 hits
+03:43:03   '짜파게티 밥'/week: 40 hits
+03:43:09   '짜파게티 밥'/month: 59 hits
+03:43:18   '짜파게티 밥'/year: 55 hits
+03:43:20   '짜파게티 밥'/views: 40 hits
+03:43:25   '짜파게티 밥'/relevance: 69 hits
+03:43:27   '짜파게티 편의점'/today: 10 hits
+03:43:29   '짜파게티 편의점'/week: 26 hits
+03:43:33   '짜파게티 편의점'/month: 35 hits
+03:43:41   '짜파게티 편의점'/year: 83 hits
+03:43:44   '짜파게티 편의점'/views: 40 hits
+03:43:49   '짜파게티 편의점'/relevance: 74 hits
+03:43:50   '짜파게티 캠핑'/today: 10 hits
+03:43:54   '짜파게티 캠핑'/week: 25 hits
+03:43:57   '짜파게티 캠핑'/month: 43 hits
+03:44:06   '짜파게티 캠핑'/year: 127 hits
+03:44:09   '짜파게티 캠핑'/views: 40 hits
+03:44:14   '짜파게티 캠핑'/relevance: 74 hits
+03:44:15   '짜파게티 고기'/today: 7 hits
+03:44:19   '짜파게티 고기'/week: 38 hits
+03:44:26   '짜파게티 고기'/month: 51 hits
+03:44:35   '짜파게티 고기'/year: 93 hits
+03:44:38   '짜파게티 고기'/views: 40 hits
+03:44:42   '짜파게티 고기'/relevance: 71 hits
+03:44:44   '짜파게티 오일'/today: 1 hits
+03:44:46   '짜파게티 오일'/week: 13 hits
+03:44:48   '짜파게티 오일'/month: 8 hits
+03:44:56   '짜파게티 오일'/year: 70 hits
+03:44:59   '짜파게티 오일'/views: 40 hits
+03:45:04   '짜파게티 오일'/relevance: 75 hits
+03:45:05   '짜파게티 올리브유'/today: 5 hits
+03:45:07   '짜파게티 올리브유'/week: 13 hits
+03:45:11   '짜파게티 올리브유'/month: 16 hits
+03:45:15   '짜파게티 올리브유'/year: 42 hits
+03:45:18   '짜파게티 올리브유'/views: 27 hits
+03:45:23   '짜파게티 올리브유'/relevance: 77 hits
+03:45:24   '짜파게티 마라'/today: 5 hits
+03:45:26   '짜파게티 마라'/week: 24 hits
+03:45:30   '짜파게티 마라'/month: 46 hits
+03:45:38   '짜파게티 마라'/year: 90 hits
+03:45:41   '짜파게티 마라'/views: 40 hits
+03:45:46   '짜파게티 마라'/relevance: 73 hits
+03:45:48   '짜파게티 참깨라면'/today: 5 hits
+03:45:50   '짜파게티 참깨라면'/week: 15 hits
+03:45:54   '짜파게티 참깨라면'/month: 32 hits
+03:46:02   '짜파게티 참깨라면'/year: 108 hits
+03:46:05   '짜파게티 참깨라면'/views: 40 hits
+03:46:10   '짜파게티 참깨라면'/relevance: 67 hits
+03:46:12   '짜파게티 짜왕'/today: 5 hits
+03:46:16   '짜파게티 짜왕'/week: 14 hits
+03:46:20   '짜파게티 짜왕'/month: 20 hits
+03:46:28   '짜파게티 짜왕'/year: 108 hits
+03:46:31   '짜파게티 짜왕'/views: 40 hits
+03:46:36   '짜파게티 짜왕'/relevance: 73 hits
+03:46:38   '짜장라면 꿀조합'/today: 5 hits
+03:46:40   '짜장라면 꿀조합'/week: 17 hits
+03:46:44   '짜장라면 꿀조합'/month: 27 hits
+03:46:53   '짜장라면 꿀조합'/year: 60 hits
+03:46:55   '짜장라면 꿀조합'/views: 40 hits
+03:47:00   '짜장라면 꿀조합'/relevance: 67 hits
+03:47:02   '짜장라면 레시피'/today: 6 hits
+03:47:06   '짜장라면 레시피'/week: 32 hits
+03:47:13   '짜장라면 레시피'/month: 87 hits
+03:47:22   '짜장라면 레시피'/year: 119 hits
+03:47:25   '짜장라면 레시피'/views: 40 hits
+03:47:30   '짜장라면 레시피'/relevance: 77 hits
+03:47:32   'chapagetti recipe'/today: 16 hits
+03:47:36   'chapagetti recipe'/week: 42 hits
+03:47:42   'chapagetti recipe'/month: 48 hits
+03:47:51   'chapagetti recipe'/year: 147 hits
+03:47:54   'chapagetti recipe'/views: 40 hits
+03:47:59   'chapagetti recipe'/relevance: 65 hits
+03:48:00   'chapagetti hack'/today: 5 hits
+03:48:03   'chapagetti hack'/week: 21 hits
+03:48:07   'chapagetti hack'/month: 25 hits
+03:48:12   'chapagetti hack'/year: 47 hits
+03:48:14   'chapagetti hack'/views: 11 hits
+03:48:19   'chapagetti hack'/relevance: 61 hits
+03:48:21   'chapagetti'/today: 4 hits
+03:48:25   'chapagetti'/week: 40 hits
+03:48:32   'chapagetti'/month: 97 hits
+03:48:37   'chapagetti'/year: 58 hits
+03:48:40   'chapagetti'/views: 40 hits
+03:48:45   'chapagetti'/relevance: 69 hits
+03:48:47   'jjapaghetti recipe'/today: 20 hits
+03:48:51   'jjapaghetti recipe'/week: 41 hits
+03:48:54   'jjapaghetti recipe'/month: 37 hits
+03:49:00   'jjapaghetti recipe'/year: 91 hits
+03:49:03   'jjapaghetti recipe'/views: 40 hits
+03:49:07   'jjapaghetti recipe'/relevance: 60 hits
+03:49:09   'chapaguri recipe'/today: 15 hits
+03:49:12   'chapaguri recipe'/week: 31 hits
+03:49:17   'chapaguri recipe'/month: 48 hits
+03:49:24   'chapaguri recipe'/year: 76 hits
+03:49:27   'chapaguri recipe'/views: 40 hits
+03:49:32   'chapaguri recipe'/relevance: 75 hits
+03:49:34   'ram-don recipe'/today: 30 hits
+03:49:38   'ram-don recipe'/week: 62 hits
+03:49:44   'ram-don recipe'/month: 73 hits
+03:49:54   'ram-don recipe'/year: 131 hits
+03:49:57   'ram-don recipe'/views: 40 hits
+03:50:01   'ram-don recipe'/relevance: 84 hits
+03:50:03   'chapagetti cheese'/today: 6 hits
+03:50:07   'chapagetti cheese'/week: 50 hits
+03:50:12   'chapagetti cheese'/month: 39 hits
+03:50:20   'chapagetti cheese'/year: 104 hits
+03:50:23   'chapagetti cheese'/views: 40 hits
+03:50:28   'chapagetti cheese'/relevance: 63 hits
+03:50:29   'nongshim chapagetti'/today: 11 hits
+03:50:33   'nongshim chapagetti'/week: 24 hits
+03:50:35   'nongshim chapagetti'/month: 35 hits
+03:50:43   'nongshim chapagetti'/year: 67 hits
+03:50:46   'nongshim chapagetti'/views: 40 hits
+03:50:51   'nongshim chapagetti'/relevance: 82 hits
+03:50:53   'chapagetti mukbang'/today: 11 hits
+03:50:57   'chapagetti mukbang'/week: 73 hits
+03:51:04   'chapagetti mukbang'/month: 87 hits
+03:51:13   'chapagetti mukbang'/year: 98 hits
+03:51:15   'chapagetti mukbang'/views: 40 hits
+03:51:20   'chapagetti mukbang'/relevance: 104 hits
+03:51:21 phase2: 7559 unique videos, 7559 to fetch (5507 title-matched first)
+03:51:30   details 50/7559
+03:51:38   details 100/7559
+03:51:46   details 150/7559
+03:51:54   details 200/7559
+03:52:02   details 250/7559
+03:52:10   details 300/7559
+03:52:18   details 350/7559
+03:52:26   details 400/7559
+03:52:34   details 450/7559
+03:52:42   details 500/7559
+03:52:50   details 550/7559
+03:52:57   details 600/7559
+03:53:05   details 650/7559
+03:53:13   details 700/7559
+03:53:21   details 750/7559
+03:53:29   details 800/7559
+03:53:37   details 850/7559
+03:53:44   details 900/7559
+03:53:53   details 950/7559
+03:54:00   details 1000/7559
+03:54:08   details 1050/7559
+03:54:16   details 1100/7559
+03:54:24   details 1150/7559
+03:54:32   details 1200/7559
+03:54:40   details 1250/7559
+03:54:48   details 1300/7559
+03:54:56   details 1350/7559
+03:55:03   details 1400/7559
+03:55:11   details 1450/7559
+03:55:19   details 1500/7559
+03:55:27   details 1550/7559
+03:55:35   details 1600/7559
+03:55:43   details 1650/7559
+03:55:50   details 1700/7559
+03:55:58   details 1750/7559
+03:56:06   details 1800/7559
+03:56:14   details 1850/7559
+03:56:21   details 1900/7559
+03:56:29   details 1950/7559
+03:56:38   details 2000/7559
+03:56:45   details 2050/7559
+03:56:53   details 2100/7559
+03:57:01   details 2150/7559
+03:57:08   details 2200/7559
+03:57:16   details 2250/7559
+03:57:24   details 2300/7559
+03:57:32   details 2350/7559
+03:57:40   details 2400/7559
+03:57:48   details 2450/7559
+03:57:57   details 2500/7559
+03:58:05   details 2550/7559
+03:58:13   details 2600/7559
+03:58:20   details 2650/7559
+03:58:28   details 2700/7559
+03:58:36   details 2750/7559
+03:58:43   details 2800/7559
+03:58:51   details 2850/7559
+03:58:59   details 2900/7559
+03:59:07   details 2950/7559
+03:59:15   details 3000/7559
+03:59:23   details 3050/7559
+03:59:31   details 3100/7559
+03:59:39   details 3150/7559
+03:59:47   details 3200/7559
+03:59:55   details 3250/7559
+04:00:03   details 3300/7559
+04:00:10   details 3350/7559
+04:00:18   details 3400/7559
+04:00:26   details 3450/7559
+04:00:34   details 3500/7559
+04:00:42   details 3550/7559
+04:00:50   details 3600/7559
+04:00:58   details 3650/7559
+04:01:06   details 3700/7559
+04:01:14   details 3750/7559
+04:01:22   details 3800/7559
+04:01:30   details 3850/7559
+04:01:38   details 3900/7559
+04:01:46   details 3950/7559
+04:01:54   details 4000/7559
+04:02:02   details 4050/7559
+04:02:09   details 4100/7559
+04:02:17   details 4150/7559
+04:02:26   details 4200/7559
+04:02:34   details 4250/7559
+04:02:41   details 4300/7559
+04:02:49   details 4350/7559
+04:02:57   details 4400/7559
+04:03:04   details 4450/7559
+04:03:12   details 4500/7559
+04:03:20   details 4550/7559
+04:03:28   details 4600/7559
+04:03:36   details 4650/7559
+04:03:44   details 4700/7559
+04:03:52   details 4750/7559
+04:04:00   details 4800/7559
+04:04:07   details 4850/7559
+04:04:15   details 4900/7559
+04:04:23   details 4950/7559
+04:04:31   details 5000/7559
+04:04:39   details 5050/7559
+04:04:47   details 5100/7559
+04:04:54   details 5150/7559
+04:05:02   details 5200/7559
+04:05:10   details 5250/7559
+04:05:18   details 5300/7559
+04:05:26   details 5350/7559
+04:05:35   details 5400/7559
+04:05:43   details 5450/7559
+04:05:50   details 5500/7559
+04:05:58   details 5550/7559
+04:06:06   details 5600/7559
+04:06:14   details 5650/7559
+04:06:22   details 5700/7559
+04:06:31   details 5750/7559
+04:06:39   details 5800/7559
+04:06:47   details 5850/7559
+04:06:55   details 5900/7559
+04:07:02   details 5950/7559
+04:07:10   details 6000/7559
+04:07:18   details 6050/7559
+04:07:26   details 6100/7559
+04:07:34   details 6150/7559
+04:07:42   details 6200/7559
+04:07:49   details 6250/7559
+04:07:57   details 6300/7559
+04:08:05   details 6350/7559
+04:08:13   details 6400/7559
+04:08:21   details 6450/7559
+04:08:29   details 6500/7559
+04:08:37   details 6550/7559
+04:08:45   details 6600/7559
+04:08:52   details 6650/7559
+04:09:00   details 6700/7559
+04:09:08   details 6750/7559
+04:09:16   details 6800/7559
+04:09:24   details 6850/7559
+04:09:32   details 6900/7559
+04:09:40   details 6950/7559
+04:09:48   details 7000/7559
+04:09:55   details 7050/7559
+04:10:03   details 7100/7559
+04:10:11   details 7150/7559
+04:10:18   details 7200/7559
+04:10:26   details 7250/7559
+04:10:33   details 7300/7559
+04:10:41   details 7350/7559
+04:10:50   details 7400/7559
+04:10:58   details 7450/7559
+04:11:05   details 7500/7559
+04:11:13   details 7550/7559
+04:11:15 phase2 done
+04:11:15 phase3: 450 videos for comments
+04:11:29   comments 25/450
+04:11:40   comments 50/450
+04:11:52   comments 75/450
+04:12:04   comments 100/450
+04:12:15   comments 125/450
+04:12:26   comments 150/450
+04:12:38   comments 175/450
+04:12:50   comments 200/450
+04:13:02   comments 225/450
+04:13:14   comments 250/450
+04:13:25   comments 275/450
+04:13:36   comments 300/450
+04:13:47   comments 325/450
+04:13:58   comments 350/450
+04:14:09   comments 375/450
+04:14:21   comments 400/450
+04:14:32   comments 425/450
+04:14:44   comments 450/450
+04:14:44 phase3 done
+04:14:44 ALL DONE
